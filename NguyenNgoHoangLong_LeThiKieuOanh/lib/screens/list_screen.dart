@@ -95,7 +95,7 @@ class _ListScreenState extends State<ListScreen> {
                                     context: context,
                                     builder: (context) => AlertDialog(
                                       title: const Text(
-                                          'Do You Sure Remove This Customer ?'),
+                                          'Bạn có chắc chắn muốn xóa không ?'),
                                       actions: [
                                         TextButton(
                                             onPressed: () => {
@@ -103,11 +103,11 @@ class _ListScreenState extends State<ListScreen> {
                                                       snapshot.data[index]),
                                                   Navigator.of(context).pop()
                                                 },
-                                            child: const Text('OK')),
+                                            child: const Text('Đồng ý')),
                                         TextButton(
                                             onPressed: () =>
                                                 {Navigator.of(context).pop()},
-                                            child: const Text('Cancel'))
+                                            child: const Text('Hủy'))
                                       ],
                                     ),
                                   )

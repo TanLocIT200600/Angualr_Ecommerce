@@ -17,12 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.white
-      ),
+      theme: ThemeData(primaryColor: Colors.white),
       initialRoute: '$HomePage',
       routes: {
         '$HomePage': (_) => const HomePage(),
+        // '/add': (_) => const FormStudentScreen(),
         '/add': (_) => const FormStudentScreen(),
         '/update': (_) => const FormStudentScreen(),
         '$ListScreen': (_) => const ListScreen(),
