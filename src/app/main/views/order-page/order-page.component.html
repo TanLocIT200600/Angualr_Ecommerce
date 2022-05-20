@@ -1,0 +1,122 @@
+<ng-container *ngIf="{userInfo:userInfo$|async, cartItem:cartItem$|async} as data;">
+    <main *ngIf="data.userInfo && data.cartItem">
+        <div class="container order">
+            <div class="row justify-content-center">
+                <h3 class="text-secondary p-3 text-uppercase">Chi tiết đơn hàng</h3>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-left">
+                    <div class="mb-2 pl-2 order-link">
+                        <a routerLink="/cart" class="">
+                            <span>Giỏ Hàng</span>
+                        </a>
+                        >
+                        <span>Chi Tiết Đơn Hàng</span>
+                    </div>
+                    <h5 class="pl-2">Thông tin liên lạc</h5>
+                    <form #orderForm="ngForm" (ngSubmit)="postOrder(orderForm)" class="pl-2">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Tên Người Nhận Hàng</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    [(ngModel)]="data.userInfo.name" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="phone">Số Điện Thoại Nhận Hàng</label>
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                    [(ngModel)]="data.userInfo.phone" required>
+
+                                <ng-container *ngIf="isPhoneValid == false">
+                                    <p class="text-danger">Vui lòng nhập số điên thoại</p>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa Chỉ Giao Hàng</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                [(ngModel)]="data.userInfo.address" placeholder="Địa Chỉ Giao Hàng" required>
+                            <ng-container *ngIf="isAddressValid == false">
+                                <p class="text-danger">Vui lòng nhập địa chỉ giao hàng</p>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pay">Chọn kiểu thanh toán</label>
+                            <div class="form-check ml-4">
+                                <input class="form-check-input" type="radio" name="pay" id="pay" value="1" ngModel
+                                    checked>
+                                <label class="form-check-label" for="pay">
+                                    Thanh toán khi nhận hàng
+                                </label>
+                            </div>
+                            <div class="form-check ml-4">
+                                <input class="form-check-input" type="radio" name="pay" id="pay1" ngModel value="2">
+                                <label class="form-check-label" for="pay1">
+                                    Thanh toán online
+                                </label>
+                            </div>
+                            <ng-container *ngIf="isSelectPay == false">
+                                <p class="text-danger">Chọn phương thức thanh toán</p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <label for="kvgh">Chọn khu vực giao hàng</label>
+                            <select class="form-control" id="kvgh" name="kvgh" (change)="changeValue($event)" ngModel>
+                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="0">Trong thành phố</option>
+                                <option value="1">Ngoài thành phố</option>
+                            </select>
+                            <ng-container *ngIf="isAreaShip == false">
+                                <p class="text-danger">Chọn khu vực giao hàng</p>
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="confirm" name="comfirm" ngModel>
+                                <label class="form-check-label" for="confirm">
+                                    Xác Nhận Thông Tin Chính Xác
+                                </label>
+                            </div>
+                            <ng-container *ngIf="isConfirm == false">
+                                <p class="text-danger">Tích để xác nhận thông tin chính xác</p>
+                            </ng-container>
+                        </div>
+                        <input type="hidden" name="username" id="username" [(ngModel)]="data.userInfo.username">
+                        <button type="submit" class="btn btn-danger"><span class="font-weight-bold">Đặt
+                                Hàng</span></button>
+                    </form>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-right">
+                    <div class="mt-5">
+                        <div class="order-sumary-item {{(i > 0)?'mt-2':''}}"
+                            *ngFor="let item of data.cartItem.items,let i=index">
+                            <div class="order-item-title">
+                                <img src="{{environment.EndPointAPI}}/img/product/{{item.logo}}" alt="">
+                                <span>{{item.amout}}</span>
+                                <p>{{item.name}}</p>
+                            </div>
+                            <div class="order-item-price ml-5">
+                                <p>{{ item.amout * item.price|currency:"VND":"symbol"}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="order-total">
+                        <div>
+                            <p>Phí Ship</p>
+                            <p>{{costShip|currency:"VND":"symbol"}}</p>
+                        </div>
+                        <div>
+                            <p>Tổng giá sản phẩm</p>
+                            <p>{{getTotalInCart(data.cartItem.items)|currency:"VND":"symbol"}}</p>
+                        </div>
+                        <div class="total">
+                            <p>Tổng</p>
+                            <p>{{(getTotalInCart(data.cartItem.items) + costShip)|currency:"VND":"symbol"}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</ng-container>

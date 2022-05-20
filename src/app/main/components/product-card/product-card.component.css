@@ -1,0 +1,96 @@
+.product-cart a:hover{
+    cursor: pointer;
+}
+
+.product-cart .box-img .box-limit{
+    position: absolute;
+    top: 35px;
+    right: 15px;
+    font-weight: 600;
+    font-size: 16px;
+    transform: rotateZ(40deg);
+    border: 1px solid red;
+    background: red;
+    color: white;
+}
+
+.product-cart .btn-add-cart{
+    display: none;
+}
+
+@media (max-width: 850px){
+     .product-cart{
+        width: 100% !important;
+        text-align: center
+    }
+    .product-cart .box-img{
+        width: 100%;
+        height: auto;
+    }
+
+    ::ng-deep .brand-img{
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .product-cart .box-img a .box-image-responsive{
+        width: 100%;
+        height: auto;
+    }
+
+    ::ng-deep .product-cart .product-cart-icon{
+        position: absolute;
+        left: 20px !important;
+        top: 280px !important;
+    }
+
+    ::ng-deep .product-cart:hover span{
+        display: none !important;
+    }
+
+    .product-cart .btn-add-cart{
+        display: inline-block;
+        margin: 10px 0px;
+    }
+
+    .product-cart .btn-add-cart button{
+        font-size: 15px;
+        font-weight: 700;
+        padding: 5px 20px;
+        border: none;
+        border-radius: 10px;
+        background: red;
+        color: white;
+    }
+
+    .product-cart .btn-add-cart button:hover{
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+}
+
+@media (max-width: 500px){
+    ::ng-deep .product-cart .product-cart-icon{
+        position: absolute;
+        left: 25px !important;
+        top: 165px !important;
+    }
+    .box-limit{
+        top: 25px !important;
+        right: 0px !important;
+    }
+}
+
+@media (max-width:768px){
+    ::ng-deep .product-cart .product-cart-icon{
+        position: absolute;
+        left: 15px !important;
+        top: 190px !important;
+    }
+    ::ng-deep .box-limit{
+        top: 30px !important;
+        right: 10px !important;
+    }
+    .product-cart .box-text {
+        height: 135px;
+    }
+}

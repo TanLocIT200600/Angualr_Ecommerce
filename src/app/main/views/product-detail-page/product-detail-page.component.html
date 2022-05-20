@@ -1,0 +1,174 @@
+<main>
+    <div class="container mt-2">
+        <div class="row" *ngIf="product$|async as product">
+            <nav class="title-product">
+                <a routerLink="/">
+                    Trang chủ
+                </a>
+                /
+                <ng-container>
+                    <a routerLink="/category/dong-ho-nam" *ngIf="product.type == 'nam'">
+                        Đồng Hồ Nam
+                    </a>
+                    <a routerLink="/category/dong-ho-nu" *ngIf="product.type == 'nu'">
+                        Đồng Hồ Nữ
+                    </a>
+                </ng-container>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12" *ngIf="product$|async as product">
+                <img src="{{environment.EndPointAPI}}/img/product/{{product.logo}}" class="fancybox zoom img-fluid "
+                    alt="">
+                <ng-container *ngIf="product.amount == 0">
+                    <p class="box-limit">
+                        Hết Hàng
+                    </p>
+                </ng-container>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12" *ngIf="product$|async as product">
+                <div class="product-describe">
+                    <div class="product-describe-title">
+                        <h1>{{product.title}}</h1>
+                    </div>
+                    <hr>
+                    <div class="product-describe-price">
+                        <span>Giá:
+                            <h5>{{product.price | currency:"VND":"symbol"}}</h5>
+                        </span>
+                    </div>
+                    <div class="product-describe-guarantee">
+                        <p>Số lượng: <b>{{product.amount}}</b></p>
+                    </div>
+                    <div class="product-describe-guarantee">
+                        <p>Chính sách bảo hành: <b>{{product.guarantee}} Năm</b></p>
+                    </div>
+                    <ng-container *ngIf="product.amount > 0">
+                        <div class="product-describe-button">
+                            <button (click)="addToCart(product)">Thêm vào giỏ hàng</button>
+                            <button (click)="buy(product)" class="ml-1">Mua ngay</button>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="product.amount ==0 ">
+                        <div class="product-describe-button-disable">
+                            <button disabled (click)="addToCart(product)">Thêm vào giỏ hàng</button>
+                            <button disabled (click)="buy(product)" class="ml-1">Mua ngay</button>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 pl-5 product-left-mobile" *ngIf="product$|async as product">
+                <div class="product-left">
+                    <ng-container *ngIf="brand$|async as brand">
+                        <div class="product-lef-img">
+                            <img src="{{environment.EndPointAPI}}/img/brand/{{brand.logo}}" alt="">
+                        </div>
+                    </ng-container>
+                    <div class="product-left-box">
+                        <div>
+                            <img src="/assets/4.png" alt="">
+                        </div>
+                        <div>
+                            <p><b>THƯƠNG HIỆU HÀNG ĐẦU</b> Với hơn 20 năm kinh nghiệm trong lĩnh vực bán lẻ đồng hồ.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="product-left-box">
+                        <div>
+                            <img src="/assets/6.png" alt="" width="50px" height="50px">
+                        </div>
+                        <div>
+                            <p><b>BẢO HÀNH LÊN ĐẾN 5 NĂM</b> Ngoài bảo hành chính hãng. Khi mua hàng tại VINAWATCH
+                                được
+                                hỗ trợ thêm.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row ml-0 product-info">
+                <div class="btn-group">
+                    <button class="active" id="describe">
+                        Mô tả
+                    </button>
+                    <button id="product-guarantee">
+                        Chính sách bảo hành
+                    </button>
+                    <button id="product-comment">
+                        Bình Luận
+                    </button>
+                </div>
+
+                <div class="product-data" id="collapse-describe">
+                    <div class="product-data-describe" *ngIf="product$|async as product">
+                        <h3>Thông Số Kỹ Thuật Đồng Hồ {{product.name}}</h3>
+                        <ul>
+                            <li><b>Thương Hiệu:</b>{{product.describe.thuonghieu}}</li>
+                            <li><b>Đường Kính:</b>{{product.describe.duongkinh}}</li>
+                            <li><b>Giới Tính:</b>{{product.describe.gioitinh}}</li>
+                            <li><b>Độ Dày:</b>{{product.describe.doday}}</li>
+                            <li><b>Loại Kính:</b>{{product.describe.loaikinh}}</li>
+                            <li><b>Màu Dây:</b>{{product.describe.mauday}}</li>
+                            <li><b>Máy:</b>{{product.describe.may}}</li>
+                            <li><b>Niềng:</b>{{product.describe.nieng}}</li>
+                            <li><b>Chất Liệu Dây:</b>{{product.describe.chatlieuday}}</li>
+                            <li><b>Chịu Nước:</b>{{product.describe.chiunuoc}}</li>
+                            <li><b>Màu Mặt số:</b>{{product.describe.maumatso}}</li>
+                            <li><b>Chức Năng:</b>{{product.describe.chucnang}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-data" id="collapse-product-guarantee">
+                    <div class="product-data-guarantee" *ngIf="product$|async as product"
+                        [innerHTML]='product.warrantyPolicy'>
+                    </div>
+                </div>
+
+                <div class="product-data" id="collapse-product-comment">
+                    <ng-container *ngIf="comment$|async as comments;else commentNotFound">
+                        <ng-container *ngIf="comments['data'].length > 0;else commentNotFound">
+                            <app-product-comment *ngFor="let item of comments['data']" [comment]="item"></app-product-comment>
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #commentNotFound>
+                        <div class="product-comment-not-found">
+                            <p>Không có bình luận nào cho sản phẩm này</p>
+                        </div>
+                    </ng-template>
+                    
+                    <div class="product-comment-form" *ngIf="user$|async as user;else commentLogin">
+                        <form #commentForm="ngForm" (ngSubmit)="submitComment(commentForm)" >
+                            <div class="form-group">
+                                <textarea required class="form-control" id="comment" name="comment" ngModel placeholder="Nội dung bình luận....." rows="5"></textarea>
+                            </div>
+                            <input type="hidden" name="username" ngModel={{user.username}}>
+                            <input type="hidden" name="name" ngModel={{user.name}}>
+                            <button type="submit" class="btn btn-secondary">Bình luận</button>
+                        </form>
+                    </div>
+                    <ng-template #commentLogin>
+                        <div class="comment-login">
+                            <p>Đăng nhập để bình luận sản phẩm</p>
+                            <a routerLink="/auth" type="button" class="btn btn-secondary">Đăng Nhập</a>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row product justify-content-between">
+            <div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-3">
+                <h4 class="text-center text-uppercase">Sản phẩm tương tự</h4>
+            </div>
+            <div class="row w-100">
+                <ng-container *ngFor="let item of productRand$|async">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                        <app-product-card [product]="item"></app-product-card>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</main>

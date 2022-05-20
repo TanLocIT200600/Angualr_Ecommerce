@@ -1,0 +1,30 @@
+<div class="product-cart pl-2 pr-2">
+    <ng-container *ngIf="product.amount > 0">
+        <span class="product-cart-icon">
+            <a (click)="addToCart()"><i class="fa fa-shopping-cart fa-2x text-danger"></i></a>
+        </span>
+    </ng-container>
+    <div class="box-img">
+        <a routerLink="/product/{{product._id}}">
+            <img class="box-image-responsive" src="{{environment.EndPointAPI}}/img/product/{{product.logo}}" alt="">
+        </a>
+        <ng-container *ngIf="product.amount == 0">
+            <p class="box-limit">
+                Hết Hàng
+            </p>
+        </ng-container>
+    </div>
+    <div class="box-text">
+        <div class="box-title">
+            <a routerLink="/product/{{product._id}}">
+                <p>{{product.title}}</p>
+            </a>
+        </div>
+        <div class="box-price">
+            <h5>{{product.price | currency:"VND":"symbol"}}</h5>
+        </div>
+    </div>
+    <div class="btn-add-cart">
+        <button (click)="addToCart()">Add To Cart</button>
+    </div>
+</div>
