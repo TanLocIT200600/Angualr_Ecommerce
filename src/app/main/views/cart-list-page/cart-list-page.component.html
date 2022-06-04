@@ -1,57 +1,62 @@
 <main *ngIf="cartItems">
-    <div class="cart container">
-        <div class="cart-title">
-            <h4>Giỏ hàng</h4>
-        </div>
-        <div class="cart-list">
-            <div class="cart-item">
-                <table class="table table-striped" *ngIf="cartItems.length >= 1;else noProduct">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 45%;">Tên Sản Phẩm</th>
-                            <th scope="col" style="width: 15%;">Số Lượng</th>
-                            <th scope="col" style="width: 25%;">Giá</th>
-                            <th scope="col" style="width: 15%;">Xóa Sản Phẩm</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of cartItems">
-                            <td>
-                                <img src="{{environment.EndPointAPI}}/img/product/{{item.logo}}" alt="">
-                                <a href="#">{{item.name}}</a>
-                            </td>
-                            <td>
-                                <input (change)="changeAmount($event,item.idProduct,item.maxAmount)" type="number"
-                                    [(value)]="item.amout" min="1" max="{{item.maxAmount}}">
-                            </td>
-                            <td>
-                                {{item.price | currency:"VND":"symbol"}}
-                            </td>
-                            <td>
-                                <i (click)="deleteProductInCart(item)" class="fa fa-trash fa-2x"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <ng-template #noProduct>
-                    <div class="w-100">
-                        <p class="text-center pt-3 text-secondary text-uppercase">Không có sản phẩm trong giỏ hàng</p>
-                    </div>
-                </ng-template>
-
-                <hr class="mt-4 mb-4">
-                <div class="total-cart d-flex justify-content-end">
-                    <p class="font-weight-bold"><span class="text-secondary">Thành Tiền:</span>
-                        {{totalInCart|currency:"VND":"symbol"}} </p>
-                </div>
-                <div class="button-cart d-flex justify-content-end">
-                    <button routerLink="/order" type="button" class="btn btn-danger"
-                        [disabled]="(cartItems.length == 0 )">
-                        <span class="font-weight-bold">Tiến Hành Đặt
-                            Hàng</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+  <div class="cart container">
+    <div class="cart-title">
+      <h4>Giỏ hàng</h4>
     </div>
+    <div class="cart-list">
+      <div class="cart-item">
+        <table class="table table-striped" *ngIf="cartItems.length >= 1;else noProduct">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 40%;">Tên Sản Phẩm</th>
+              <th scope="col" style="width: 15%;">Số Lượng</th>
+              <th scope="col" style="width: 15%;">Đơn giá</th>
+              <th scope="col" style="width: 20%;">Thành tiền</th>
+              <th scope="col" style="width: 10%;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td>
+                <img src="{{environment.EndPointAPI}}/img/product/{{item.logo}}" alt="">
+                <a href="#">{{item.name}}</a>
+              </td>
+              <td>
+                <input (change)="changeAmount($event,item.idProduct,item.maxAmount)" type="number"
+                  [(value)]="item.amout" min="1" max="{{item.maxAmount}}">
+              </td>
+              <td>
+                {{item.price | currency:"VND":"symbol"}}
+              </td>
+              <td>
+                {{item.price * item.amout | currency:"VND":"symbol"}}
+              </td>
+              <td>
+                <i (click)="deleteProductInCart(item)" class="fa fa-trash fa-2x"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noProduct>
+          <div class="w-100">
+            <p class="text-center pt-3 text-secondary text-uppercase">Không có sản phẩm trong giỏ
+              hàng</p>
+          </div>
+        </ng-template>
+
+        <hr class="mt-4 mb-4">
+        <div class="total-cart d-flex justify-content-end">
+          <p class="font-weight-bold"><span class="text-secondary">Thành Tiền:</span>
+            {{totalInCart|currency:"VND":"symbol"}} </p>
+        </div>
+        <div class="button-cart d-flex justify-content-end">
+          <button routerLink="/order" type="button" class="btn btn-danger"
+            [disabled]="(cartItems.length == 0 )">
+            <span class="font-weight-bold">Tiến Hành Đặt
+              Hàng</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
