@@ -19,7 +19,7 @@
             <tr *ngFor="let item of cartItems">
               <td>
                 <img src="{{environment.EndPointAPI}}/img/product/{{item.logo}}" alt="">
-                <a href="#">{{item.name}}</a>
+                <a routerLink="/product/{{item.idProduct}}">{{item.name}}</a>
               </td>
               <td>
                 <input (change)="changeAmount($event,item.idProduct,item.maxAmount)" type="number"
