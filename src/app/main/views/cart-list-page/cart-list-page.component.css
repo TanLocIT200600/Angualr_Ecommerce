@@ -10,6 +10,7 @@
 table tr th{
     color: #969696;
     text-transform: uppercase;
+    text-align: center;
 }
 table tr td img{
     width: 80px;
